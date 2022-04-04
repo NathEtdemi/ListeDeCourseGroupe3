@@ -27,6 +27,7 @@ public class DataBaseLinker extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try
         {
+            TableUtils.dropTable( connectionSource, Produit.class, true );
             TableUtils.createTable( connectionSource, Liste.class );
             TableUtils.createTable( connectionSource, Recette.class );
             TableUtils.createTable( connectionSource, Produit.class );
@@ -41,9 +42,15 @@ public class DataBaseLinker extends OrmLiteSqliteOpenHelper {
 
             Produit produit1=new Produit("Farine");
             Produit produit2=new Produit("Lait");
+            Produit produit3=new Produit("Oeuf");
+            Produit produit4=new Produit("Sucre");
+            Produit produit5=new Produit("Pomme");
 
             daoProduit.create(produit1);
             daoProduit.create(produit2);
+            daoProduit.create(produit3);
+            daoProduit.create(produit4);
+            daoProduit.create(produit5);
 
             Log.i( "DATABASE", "onCreate invoked" );
         }
