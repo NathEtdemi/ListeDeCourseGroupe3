@@ -8,23 +8,14 @@ public class Produit {
     @DatabaseField( columnName = "idProduit", generatedId = true )
     private int idProduit;
 
-    @DatabaseField
+    @DatabaseField( columnName="libelle")
     private String libelleProduit;
 
-    @DatabaseField
-    private int quantiteProduit;
-
-    @DatabaseField
-    private float prixProduit;
-
-    public Produit() {
+    public Produit(String libelleProduit) {
+        this.libelleProduit = libelleProduit;
     }
 
-    public Produit(int idProduit, String libelleProduit, int quantiteProduit, float prixProduit) {
-        this.idProduit = idProduit;
-        this.libelleProduit = libelleProduit;
-        this.quantiteProduit = quantiteProduit;
-        this.prixProduit = prixProduit;
+    public Produit() {
     }
 
     public int getIdProduit() {
@@ -35,14 +26,6 @@ public class Produit {
         return libelleProduit;
     }
 
-    public int getQuantiteProduit() {
-        return quantiteProduit;
-    }
-
-    public float getPrixProduit() {
-        return prixProduit;
-    }
-
     public void setIdProduit(int idProduit) {
         this.idProduit = idProduit;
     }
@@ -51,11 +34,4 @@ public class Produit {
         this.libelleProduit = libelleProduit;
     }
 
-    public void setQuantiteProduit(int quantiteProduit) {
-        this.quantiteProduit = quantiteProduit;
-    }
-
-    public void setPrixProduit(float prixProduit) {
-        this.prixProduit = prixProduit;
-    }
 }
