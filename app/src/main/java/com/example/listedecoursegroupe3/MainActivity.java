@@ -11,6 +11,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.listedecoursegroupe3.entites.Produit;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
@@ -24,20 +25,18 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        grille=findViewById(R.id.layout);
         DataBaseLinker linker = new DataBaseLinker(this);
         try
         {
-            Dao<com.example.listedecoursegroupe3.entites.Produit, Integer> daoProduit = linker.getDao( com.example.listedecoursegroupe3.entites.Produit.class );
-            List<com.example.listedecoursegroupe3.entites.Produit> produit = daoProduit.queryForAll();
-            Log.i("bouton", "On me clique dessus !");
-            for(com.example.listedecoursegroupe3.entites.Produit Produits: produit)
+            Dao<Produit, Integer> daoProduit = linker.getDao( Produit.class );
+            List<Produit> produit = daoProduit.queryForAll();
+            for(Produit Produits: produit)
             {
                 TableRow newRow = new TableRow(this);
                 TextView newText = new TextView(this);
                 newText.setText(Produits.getLibelleProduit());
-                Button ajouter = new Button(this);
                 Button Modifier = new Button(this);
-                ajouter.setText("Ajouter au panier");
                 Modifier.setText("Modifier Produit");
                 Modifier.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -50,41 +49,32 @@ public class MainActivity extends AppCompatActivity
                 });
                 Button Plus = new Button(this);
                 TextView quantité = new TextView(this);
+                quantité.setText("1");
                 Button Moins = new Button(this);
                 Plus.setText("+");
                 Moins.setText("-");
                 newRow.addView(newText);
-                newRow.addView(ajouter);
+                newRow.addView(Moins);
+                newRow.addView(quantité);
+                newRow.addView(Plus);
                 newRow.addView(Modifier);
-                grille=findViewById(R.id.layout);
                 grille.addView(newRow);
-                ajouter.setOnClickListener(new View.OnClickListener() {
+                Plus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v)
                     {
-                        newRow.removeView(ajouter);
-                        newRow.addView(Moins);
-                        quantité.setText("1");
-                        newRow.addView(quantité);
-                        newRow.addView(Plus);
-                        Plus.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v)
-                            {
-                                quantité.setText(Integer.toString(Integer.parseInt((String) quantité.getText())+1));
-                            }
-                        });
-                        Moins.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v)
-                            {
-                                Log.i("bouton", String.valueOf(Integer.parseInt((String) quantité.getText())));
-                                if (Integer.parseInt((String) quantité.getText())!=1)
-                                {
-                                    quantité.setText(Integer.toString(Integer.parseInt((String) quantité.getText()) - 1));
-                                }
-                            }
-                        });
+                        quantité.setText(Integer.toString(Integer.parseInt((String) quantité.getText())+1));
+                    }
+                });
+                Moins.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        Log.i("bouton", String.valueOf(Integer.parseInt((String) quantité.getText())));
+                        if (Integer.parseInt((String) quantité.getText())!=1)
+                        {
+                            quantité.setText(Integer.toString(Integer.parseInt((String) quantité.getText()) - 1));
+                        }
                     }
                 });
             }
@@ -104,6 +94,15 @@ public class MainActivity extends AppCompatActivity
               }
             });
             Recette.setText("Recette");
+            Recette.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent monIntent = new Intent(MainActivity.this, RecetteController.class);
+                    startActivity(monIntent);
+                }
+            });
             Row.addView(Liste);
             Row.addView(AjouterProduit);
             Row.addView(Recette);

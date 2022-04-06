@@ -11,8 +11,20 @@ public class Produit {
     @DatabaseField( columnName="libelle")
     private String libelleProduit;
 
-    public Produit(String libelleProduit) {
+    @DatabaseField( columnName="quantite")
+    private int quantite;
+
+    public Produit(String libelleProduit, int quantite) {
         this.libelleProduit = libelleProduit;
+        this.quantite = quantite;
+    }
+
+    public int getQuantite() {
+        return quantite;
+    }
+
+    public void setQuantite(int quantite) {
+        this.quantite = quantite;
     }
 
     public Produit() {
