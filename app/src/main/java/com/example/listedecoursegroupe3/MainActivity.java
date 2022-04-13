@@ -53,9 +53,13 @@ public class MainActivity extends AppCompatActivity
                         return true;
                     case R.id.AjoutProduit:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, ajoutProduitFragment).commit();
+                        Intent monIntent = new Intent(MainActivity.this, AlterProduit.class);
+                        startActivity(monIntent);
                         return true;
                     case R.id.Receipt:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, recetteFragment).commit();
+                        Intent uneIntent = new Intent(MainActivity.this, RecetteController.class);
+                        startActivity(uneIntent);
                         return true;
                 }
                 return false;
