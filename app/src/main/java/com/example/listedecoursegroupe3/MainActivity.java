@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
-
+        DataBaseLinker linker = new DataBaseLinker(this);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -53,13 +54,9 @@ public class MainActivity extends AppCompatActivity
                         return true;
                     case R.id.AjoutProduit:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, ajoutProduitFragment).commit();
-                        Intent monIntent = new Intent(MainActivity.this, AlterProduit.class);
-                        startActivity(monIntent);
                         return true;
-                    case R.id.Receipt:
+                    case R.id.Recettes:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, recetteFragment).commit();
-                        Intent uneIntent = new Intent(MainActivity.this, RecetteController.class);
-                        startActivity(uneIntent);
                         return true;
                 }
                 return false;
@@ -70,108 +67,6 @@ public class MainActivity extends AppCompatActivity
         Liste = findViewById(R.id.listeProduit);
         AddProduit = findViewById(R.id.Add_Product);
         Recette = findViewById(R.id.Recette);
-        DataBaseLinker linker = new DataBaseLinker(this);
-        try
-        {
-            Dao<Produit, Integer> daoProduit = linker.getDao( Produit.class );
-            List<Produit> produit = daoProduit.queryForAll();
-            for(Produit Produits: produit)
-            {
-                TableRow.LayoutParams paramButton = new TableRow.LayoutParams(
-                        TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT,
-                        1f
-                );
-
-                TableRow newRow = new TableRow(this);
-                TextView newText = new TextView(this);
-                newText.setText(Produits.getLibelleProduit());
-                ImageButton Modifier = new ImageButton(this);
-                Modifier.setLayoutParams(paramButton);
-                Modifier.setBackground(null);
-                Modifier.setImageResource(R.drawable.edit);
-                Modifier.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        Intent monIntent = new Intent(MainActivity.this, AlterProduit.class);
-                        monIntent.putExtra("id", Produits.getIdProduit());
-                        startActivity(monIntent);
-                    }
-                });
-
-                ImageButton SupprimerProduit = new ImageButton(this);
-                SupprimerProduit.setLayoutParams(paramButton);
-                SupprimerProduit.setImageResource(R.drawable.delete);
-                SupprimerProduit.setBackground(null);
-                SupprimerProduit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            daoProduit.delete(Produits);
-                        }
-                        catch (SQLException throwables) {
-                            throwables.printStackTrace();
-                        }
-                        ((ViewGroup) newRow.getParent()).removeView(newRow);
-                    }
-                });
-
-                Button Plus = new Button(this);
-                TextView quantité = new TextView(this);
-                quantité.setText("1");
-                Button Moins = new Button(this);
-                Plus.setText("+");
-                Moins.setText("-");
-                newRow.addView(newText);
-                newRow.addView(Moins);
-                newRow.addView(quantité);
-                newRow.addView(Plus);
-                newRow.addView(Modifier);
-                newRow.addView(SupprimerProduit);
-                grille.addView(newRow);
-                Plus.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        quantité.setText(Integer.toString(Integer.parseInt((String) quantité.getText())+1));
-                    }
-                });
-                Moins.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        Log.i("bouton", String.valueOf(Integer.parseInt((String) quantité.getText())));
-                        if (Integer.parseInt((String) quantité.getText())!=1)
-                        {
-                            quantité.setText(Integer.toString(Integer.parseInt((String) quantité.getText()) - 1));
-                        }
-                    }
-                });
-            }
-            AddProduit.setOnClickListener(new View.OnClickListener()
-            {
-              @Override
-              public void onClick(View v)
-              {
-                  Intent monIntent = new Intent(MainActivity.this, AlterProduit.class);
-                  startActivity(monIntent);
-              }
-            });
-            Recette.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    Intent monIntent = new Intent(MainActivity.this, RecetteController.class);
-                    startActivity(monIntent);
-                }
-            });
-        }
-        catch (SQLException throwables)
-        {
-            throwables.printStackTrace();
-        }
         linker.close();
     }
 }
