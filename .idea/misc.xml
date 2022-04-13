@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/xampp/htdocs/ListeDeCourseGroupe3/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
-        <entry key="..\:/xampp/htdocs/ListeDeCourseGroupe3/app/src/main/res/layout/addproduit.xml" value="0.18802083333333333" />
+        <entry key="..\:/xampp/htdocs/ListeDeCourseGroupe3/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/xampp/htdocs/ListeDeCourseGroupe3/app/src/main/res/layout/addproduit.xml" value="0.22146739130434784" />
+        <entry key="..\:/xampp/htdocs/ListeDeCourseGroupe3/app/src/main/res/layout/fragment_ajout_produit.xml" value="0.1" />
+        <entry key="..\:/xampp/htdocs/ListeDeCourseGroupe3/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/xampp/htdocs/ListeDeCourseGroupe3/app/src/main/res/layout/fragment_recette.xml" value="0.1" />
+        <entry key="..\:/xampp/htdocs/ListeDeCourseGroupe3/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2" />
       </map>
     </option>
   </component>
