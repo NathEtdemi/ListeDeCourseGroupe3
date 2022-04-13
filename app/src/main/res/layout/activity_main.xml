@@ -7,15 +7,45 @@
     tools:context=".MainActivity">
 
     <TableLayout
-        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/layout"
-
         android:layout_width="0dp"
-        android:layout_height="0dp"
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="0dp"
         app:layout_constraintDimensionRatio="1:1"
-        ></TableLayout>
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </TableLayout>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Button
+            android:id="@+id/liste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Voir Liste"/>
+
+        <Button
+            android:id="@+id/Add_Product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ajouter Produit"
+            tools:layout_editor_absoluteX="94dp"
+            tools:layout_editor_absoluteY="1dp" />
+
+        <Button
+            android:id="@+id/Recette"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Recette"
+            tools:layout_editor_absoluteX="319dp"
+            tools:layout_editor_absoluteY="1dp" />
+    </TableRow>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

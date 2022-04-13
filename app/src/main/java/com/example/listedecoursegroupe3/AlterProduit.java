@@ -19,11 +19,17 @@ import java.sql.SQLException;
 public class AlterProduit extends AppCompatActivity
 {
     private TableLayout grille;
+    private Button Valider;
+    private Button Supprimer;
+    private EditText name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addproduit);
         grille = findViewById(R.id.layout);
+        Valider = findViewById(R.id.Valider);
+        Supprimer = findViewById(R.id.Supprimer);
+        name = findViewById(R.id.name);
         DataBaseLinker linker = new DataBaseLinker(this);
         Intent intent = this.getIntent();
         try {
@@ -31,17 +37,15 @@ public class AlterProduit extends AppCompatActivity
             Produit produit = dao.queryForId(intent.getIntExtra("id", 0));
             if (produit == null)
             {
-                EditText text = new EditText(this);
-                Button button = new Button(this);
-                button.setText("Valider");
-                button.setOnClickListener(new View.OnClickListener()
+                Supprimer.setVisibility(View.GONE);
+                Valider.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View v) {
-                        if (String.valueOf(text.getText()) != "")
+                        if (String.valueOf(name.getText()) != "")
                         {
                             try {
-                                Produit produit = new Produit(String.valueOf(text.getText()),1);
+                                Produit produit = new Produit(String.valueOf(name.getText()),1);
                                 dao.create(produit);
                                 Intent monIntent = new Intent(AlterProduit.this, MainActivity.class);
                                 startActivity(monIntent);
@@ -53,19 +57,11 @@ public class AlterProduit extends AppCompatActivity
                         }
                     }
                 });
-                TableRow row = new TableRow(this);
-                row.addView(text);
-                row.addView(button);
-                grille.addView(row);
             }
             else
             {
-                EditText text = new EditText(this);
-                Button buttonsuppr = new Button(this);
-                Button buttonvali = new Button(this);
-                text.setText(produit.getLibelleProduit());
-                buttonsuppr.setText("Supprimer Produit");
-                buttonsuppr.setOnClickListener(new View.OnClickListener()
+                name.setText(produit.getLibelleProduit());
+                Supprimer.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View v)
@@ -82,12 +78,6 @@ public class AlterProduit extends AppCompatActivity
                         }
                     }
                 });
-                buttonvali.setText("Valider");
-                TableRow row = new TableRow(this);
-                row.addView(text);
-                row.addView(buttonsuppr);
-                row.addView(buttonvali);
-                grille.addView(row);
             }
         }
         catch (SQLException throwables)

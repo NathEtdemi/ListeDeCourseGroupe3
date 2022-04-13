@@ -20,12 +20,18 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
 {
     private TableLayout grille;
+    private Button Liste;
+    private Button AddProduit;
+    private Button Recette;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         grille=findViewById(R.id.layout);
+        Liste = findViewById(R.id.liste);
+        AddProduit = findViewById(R.id.Add_Product);
+        Recette = findViewById(R.id.Recette);
         DataBaseLinker linker = new DataBaseLinker(this);
         try
         {
@@ -78,13 +84,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
             }
-            TableRow Row = new TableRow(this);
-            Button Liste = new Button(this);
-            Button AjouterProduit = new Button(this);
-            Button Recette = new Button(this);
-            Liste.setText("Voir liste");
-            AjouterProduit.setText("Ajouter Produit");
-            AjouterProduit.setOnClickListener(new View.OnClickListener()
+            AddProduit.setOnClickListener(new View.OnClickListener()
             {
               @Override
               public void onClick(View v)
@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity
                   startActivity(monIntent);
               }
             });
-            Recette.setText("Recette");
             Recette.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -103,10 +102,6 @@ public class MainActivity extends AppCompatActivity
                     startActivity(monIntent);
                 }
             });
-            Row.addView(Liste);
-            Row.addView(AjouterProduit);
-            Row.addView(Recette);
-            grille.addView(Row);
         }
         catch (SQLException throwables)
         {

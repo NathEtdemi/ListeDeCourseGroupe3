@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -20,11 +21,18 @@ import java.util.List;
 public class RecetteController extends AppCompatActivity
 {
     private TableLayout grille;
+    private Button AjoutRecette;
+    private Button Retour;
+    private EditText name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addproduit);
         grille = findViewById(R.id.layout);
+        AjoutRecette = findViewById(R.id.Valider);
+        Retour = findViewById(R.id.Supprimer);
+        name = findViewById(R.id.name);
+        name.setVisibility(View.GONE);
         DataBaseLinker linker = new DataBaseLinker(this);
         Intent intent = this.getIntent();
         try
@@ -51,11 +59,8 @@ public class RecetteController extends AppCompatActivity
                 newRow.addView(Modifier);
                 grille.addView(newRow);
             }
-            TableRow row =new TableRow(this);
-            Button add=new Button(this);
-            Button Return=new Button(this);
-            add.setText("Ajouter Recette");
-            add.setOnClickListener(new View.OnClickListener() {
+            AjoutRecette.setText("Ajouter Recette");
+            AjoutRecette.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v)
                 {
@@ -63,8 +68,8 @@ public class RecetteController extends AppCompatActivity
                     startActivity(monIntent);
                 }
             });
-            Return.setText("Retour");
-            Return.setOnClickListener(new View.OnClickListener() {
+            Retour.setText("Retour");
+            Retour.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v)
                 {
@@ -72,9 +77,6 @@ public class RecetteController extends AppCompatActivity
                     startActivity(monIntent);
                 }
             });
-            row.addView(add);
-            row.addView(Return);
-            grille.addView(row);
         }
         catch (SQLException throwables)
         {
