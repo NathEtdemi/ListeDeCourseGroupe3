@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -83,6 +84,23 @@ public class MainActivity extends AppCompatActivity
                         ((ViewGroup) newRow.getParent()).removeView(newRow);
                     }
                 });
+
+                RadioButton radioButton = new RadioButton(this);
+                radioButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Check which radiobutton was pressed
+                        if (!radioButton.isSelected()){
+                            radioButton.setChecked(true);
+                            radioButton.setSelected(true);
+                        }
+                        else{
+                            radioButton.setChecked(false);
+                            radioButton.setSelected(false);
+                        }
+                    }
+                });
+
                 Button Plus = new Button(this);
                 TextView quantité = new TextView(this);
                 quantité.setText("1");
@@ -95,6 +113,7 @@ public class MainActivity extends AppCompatActivity
                 newRow.addView(Plus);
                 newRow.addView(Modifier);
                 newRow.addView(SupprimerProduit);
+                newRow.addView(radioButton);
                 grille.addView(newRow);
                 Plus.setOnClickListener(new View.OnClickListener() {
                     @Override

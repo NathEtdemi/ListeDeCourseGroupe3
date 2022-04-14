@@ -48,7 +48,6 @@ public class AlterRecette extends AppCompatActivity
                         if (String.valueOf(name.getText()) != "") {
                             try
                             {
-                                Log.i("bouton", String.valueOf(findViewById(R.id.5)));
                                 Recette recettes = new Recette(String.valueOf(name.getText()));
                                 dao.create(recettes);
                                 Intent monIntent = new Intent(AlterRecette.this, RecetteController.class);
