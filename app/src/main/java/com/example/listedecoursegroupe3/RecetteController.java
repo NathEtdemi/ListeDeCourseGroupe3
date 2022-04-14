@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -41,11 +43,18 @@ public class RecetteController extends AppCompatActivity
             List<Recette> Recette = daoRecette.queryForAll();
             for(Recette recette: Recette)
             {
+                TableRow.LayoutParams paramButton = new TableRow.LayoutParams(
+                        TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.WRAP_CONTENT,
+                        1f
+                );
                 TableRow newRow = new TableRow(this);
                 TextView newText = new TextView(this);
                 newText.setText(recette.getLibelle());
-                Button Modifier = new Button(this);
-                Modifier.setText("Modifier Recette");
+                ImageButton Modifier = new ImageButton(this);
+                Modifier.setLayoutParams(paramButton);
+                Modifier.setBackground(null);
+                Modifier.setImageResource(R.drawable.edit);
                 Modifier.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v)
@@ -55,8 +64,25 @@ public class RecetteController extends AppCompatActivity
                         startActivity(monIntent);
                     }
                 });
+                ImageButton Supprimer = new ImageButton(this);
+                Supprimer.setLayoutParams(paramButton);
+                Supprimer.setImageResource(R.drawable.delete);
+                Supprimer.setBackground(null);
+                Supprimer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            daoRecette.delete(recette);
+                        }
+                        catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+                        ((ViewGroup) newRow.getParent()).removeView(newRow);
+                    }
+                });
                 newRow.addView(newText);
                 newRow.addView(Modifier);
+                newRow.addView(Supprimer);
                 grille.addView(newRow);
             }
             AjoutRecette.setText("Ajouter Recette");
