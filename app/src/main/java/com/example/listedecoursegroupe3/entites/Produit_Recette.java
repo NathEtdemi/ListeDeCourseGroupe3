@@ -10,12 +10,9 @@ public class Produit_Recette
     @DatabaseField( columnName="libelle")
     private String libelleProduit;
 
-    @DatabaseField( columnName="quantite")
-    private int quantite;
 
-    public Produit_Recette(String libelleProduit, int quantite) {
+    public Produit_Recette(String libelleProduit) {
         this.libelleProduit = libelleProduit;
-        this.quantite = quantite;
     }
 
     public Produit_Recette() {
@@ -33,11 +30,4 @@ public class Produit_Recette
         this.libelleProduit = libelleProduit;
     }
 
-    public int getQuantite() {
-        return quantite;
-    }
-
-    public void setQuantite(int quantite) {
-        this.quantite = quantite;
-    }
 }

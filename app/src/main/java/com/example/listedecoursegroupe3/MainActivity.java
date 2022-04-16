@@ -151,6 +151,14 @@ public class MainActivity extends AppCompatActivity
                     startActivity(monIntent);
                 }
             });
+            Liste.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent monIntent = new Intent(MainActivity.this, ViewList.class);
+                    startActivity(monIntent);
+                }
+            });
         }
         catch (SQLException throwables)
         {

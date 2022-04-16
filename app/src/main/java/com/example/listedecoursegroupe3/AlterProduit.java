@@ -2,6 +2,7 @@ package com.example.listedecoursegroupe3;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,7 +38,7 @@ public class AlterProduit extends AppCompatActivity
             Produit produit = dao.queryForId(intent.getIntExtra("id", 0));
             if (produit == null)
             {
-                Supprimer.setVisibility(View.GONE);
+                Supprimer.setText("Retour");
                 Valider.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
@@ -55,6 +56,15 @@ public class AlterProduit extends AppCompatActivity
                                 throwables.printStackTrace();
                             }
                         }
+                    }
+                });
+                Supprimer.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        Intent monIntent = new Intent(AlterProduit.this, MainActivity.class);
+                        startActivity(monIntent);
                     }
                 });
             }

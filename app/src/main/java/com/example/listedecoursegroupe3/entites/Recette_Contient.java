@@ -4,14 +4,16 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "Recette_Contient")
 public class Recette_Contient {
+    @DatabaseField( columnName = "idRecette_Contient", generatedId = true )
+    private int idRecette_Contient;
     @DatabaseField( canBeNull = false, foreign = true, foreignColumnName = "idRecette", foreignAutoCreate = true )
     private Recette recette;
-    @DatabaseField( canBeNull = false, foreign = true, foreignColumnName = "idProduit", foreignAutoCreate = true )
-    private Produit produit;
+    @DatabaseField( canBeNull = false, foreign = true, foreignColumnName = "idProduit_Recette", foreignAutoCreate = true )
+    private Produit_Recette produit;
     @DatabaseField( columnName="quantite")
-    private String quantite;
+    private int quantite;
 
-    public Recette_Contient(Recette recette, Produit produit, String quantite) {
+    public Recette_Contient(Recette recette, Produit_Recette produit, int quantite) {
         this.recette = recette;
         this.produit = produit;
         this.quantite = quantite;
@@ -25,18 +27,19 @@ public class Recette_Contient {
         this.recette = recette;
     }
 
-    public Produit getProduit() {
+    public Produit_Recette getProduit() {
         return produit;
     }
 
-    public void setProduit(Produit produit) {
+    public void setProduit(Produit_Recette produit) {
         this.produit = produit;
     }
-    public String getQuantite() {
+
+    public int getQuantite() {
         return quantite;
     }
 
-    public void setQuantite(String quantite) {
+    public void setQuantite(int quantite) {
         this.quantite = quantite;
     }
 

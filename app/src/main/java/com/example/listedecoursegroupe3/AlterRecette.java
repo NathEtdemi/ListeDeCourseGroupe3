@@ -14,10 +14,13 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.listedecoursegroupe3.entites.Produit;
+import com.example.listedecoursegroupe3.entites.Produit_Recette;
 import com.example.listedecoursegroupe3.entites.Recette;
+import com.example.listedecoursegroupe3.entites.Recette_Contient;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class AlterRecette extends AppCompatActivity
 {
@@ -39,6 +42,8 @@ public class AlterRecette extends AppCompatActivity
         Intent intent = this.getIntent();
         try {
             Dao<Recette, Integer> dao = linker.getDao(Recette.class);
+            Dao<Produit_Recette, Integer> daoProduit_Recette = linker.getDao(Produit_Recette.class);
+            Dao<Recette_Contient, Integer> daoRecette_Contient = linker.getDao(Recette_Contient.class);
             Recette recette = dao.queryForId(intent.getIntExtra("id", 0));
             if (recette == null) {
                 Supprimer.setText("Retour");
@@ -50,6 +55,19 @@ public class AlterRecette extends AppCompatActivity
                             {
                                 Recette recettes = new Recette(String.valueOf(name.getText()));
                                 dao.create(recettes);
+                                List<Recette> nbrecette = dao.queryForAll();
+                                int idRecette=nbrecette.get(nbrecette.size()-1).getIdRecette();
+                                for (int x = 3; x < grille.getChildCount(); x++)
+                                {
+                                    Log.i("bouton", String.valueOf(x));
+                                    TableRow myrow= (TableRow) grille.getChildAt(x);
+                                    EditText nom = (EditText) myrow.getChildAt(0);
+                                    TextView quantité = (TextView) myrow.getChildAt(2);
+                                    Produit_Recette produit=new Produit_Recette(String.valueOf(nom.getText()));
+                                    Recette_Contient contient= new Recette_Contient(nbrecette.get(nbrecette.size()-1), produit,Integer.parseInt(String.valueOf(quantité.getText())));
+                                    daoProduit_Recette.create(produit);
+                                    daoRecette_Contient.create(contient);
+                                }
                                 Intent monIntent = new Intent(AlterRecette.this, RecetteController.class);
                                 startActivity(monIntent);
                             }
@@ -89,7 +107,6 @@ public class AlterRecette extends AppCompatActivity
                         newRow.addView(Plus);
                         newRow.addView(quantité);
                         newRow.addView(Moins);
-                        newRow.setId(5);
                         grille.addView(newRow);
                         Plus.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -114,6 +131,67 @@ public class AlterRecette extends AppCompatActivity
             else
             {
                 name.setText(recette.getLibelle());
+                List<Recette_Contient> contient = daoRecette_Contient.queryForAll();
+                for (int x = 0; x < contient.size(); x++)
+                {
+                    if (contient.get(x).getRecette().getIdRecette()==recette.getIdRecette())
+                    {
+                        TableRow newRow = new TableRow(getApplicationContext());
+                        EditText text = new EditText(getApplicationContext());
+                        Button Plus = new Button(getApplicationContext());
+                        Button Moins = new Button(getApplicationContext());
+                        TextView quantité = new TextView(getApplicationContext());
+                        text.setText(contient.get(x).getProduit().getLibelleProduit());
+                        Plus.setText("+");
+                        Moins.setText("-");
+                        quantité.setText(String.valueOf(contient.get(x).getQuantite()));
+                        newRow.addView(text);
+                        newRow.addView(Plus);
+                        newRow.addView(quantité);
+                        newRow.addView(Moins);
+                        grille.addView(newRow);
+                    }
+                    else{
+                        contient.remove(x);
+                    }
+                }
+                Valider.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            for (int x = 3; x < contient.size()+3; x++)
+                            {
+                                TableRow myrow= (TableRow) grille.getChildAt(x);
+                                EditText nom = (EditText) myrow.getChildAt(0);
+                                TextView quantité = (TextView) myrow.getChildAt(2);
+                                Produit_Recette produit = daoProduit_Recette.queryForId(contient.get(x-3).getProduit().getIdProduit_Recette());
+                                produit.setLibelleProduit(String.valueOf(nom.getText()));
+                                contient.get(x-3).setQuantite(Integer.parseInt(String.valueOf(quantité.getText())));
+                                contient.get(x-3).setProduit(produit);
+                                daoProduit_Recette.update(produit);
+                                daoRecette_Contient.update(contient.get(x-3));
+                            }
+                            for (int x = contient.size()+2; x < grille.getChildCount(); x++)
+                            {
+                                Log.i("bouton", String.valueOf(x));
+                                Log.i("bouton", String.valueOf(contient.size()));
+                                TableRow myrow= (TableRow) grille.getChildAt(x);
+                                EditText nom = (EditText) myrow.getChildAt(0);
+                                TextView quantité = (TextView) myrow.getChildAt(2);
+                                Produit_Recette produit=new Produit_Recette(String.valueOf(nom.getText()));
+                                Recette_Contient contients=new Recette_Contient(recette,produit,Integer.parseInt(String.valueOf(quantité.getText())));
+                                daoProduit_Recette.create(produit);
+                                daoRecette_Contient.create(contients);
+                            }
+                            recette.setLibelle(String.valueOf(name.getText()));
+                            dao.update(recette);
+                            Intent monIntent = new Intent(AlterRecette.this, RecetteController.class);
+                            startActivity(monIntent);
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+                    }
+                });
                 Supprimer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -124,6 +202,43 @@ public class AlterRecette extends AppCompatActivity
                         } catch (SQLException throwables) {
                             throwables.printStackTrace();
                         }
+                    }
+                });
+                AddIngredient.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        TableRow newRow = new TableRow(getApplicationContext());
+                        EditText text = new EditText(getApplicationContext());
+                        Button Plus = new Button(getApplicationContext());
+                        Button Moins = new Button(getApplicationContext());
+                        TextView quantité = new TextView(getApplicationContext());
+                        Plus.setText("+");
+                        Moins.setText("-");
+                        quantité.setText("1");
+                        newRow.addView(text);
+                        newRow.addView(Plus);
+                        newRow.addView(quantité);
+                        newRow.addView(Moins);
+                        grille.addView(newRow);
+                        Plus.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v)
+                            {
+                                quantité.setText(Integer.toString(Integer.parseInt((String) quantité.getText())+1));
+                            }
+                        });
+                        Moins.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v)
+                            {
+                                if (Integer.parseInt((String) quantité.getText())!=1)
+                                {
+                                    quantité.setText(Integer.toString(Integer.parseInt((String) quantité.getText()) - 1));
+                                }
+                            }
+                        });
                     }
                 });
             }
