@@ -3,6 +3,7 @@ package com.example.listedecoursegroupe3;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,6 +41,17 @@ public class AlterRecette extends AppCompatActivity
         name = findViewById(R.id.name);
         DataBaseLinker linker = new DataBaseLinker(this);
         Intent intent = this.getIntent();
+        TableRow.LayoutParams paramButton = new TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT,
+                1f
+        );
+        TableRow.LayoutParams param = new TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT,
+                1f
+        );
+
         try {
             Dao<Recette, Integer> dao = linker.getDao(Recette.class);
             Dao<Produit_Recette, Integer> daoProduit_Recette = linker.getDao(Produit_Recette.class);
@@ -83,20 +95,27 @@ public class AlterRecette extends AppCompatActivity
                     public void onClick(View v)
                     {
                         TableRow newRow = new TableRow(getApplicationContext());
+                        newRow.setGravity(Gravity.CENTER_VERTICAL);
                         EditText text = new EditText(getApplicationContext());
-                        Button Plus = new Button(getApplicationContext());
-                        Button Moins = new Button(getApplicationContext());
+                        ImageButton Plus = new ImageButton(getApplicationContext());
+                        Plus.setImageResource(R.drawable.ic_baseline_add_24);
+                        Plus.setBackground(null);
+                        Plus.setLayoutParams(paramButton);
+                        ImageButton Moins = new ImageButton(getApplicationContext());
+                        Moins.setImageResource(R.drawable.ic_baseline_remove_24);
+                        Moins.setBackground(null);
+                        Moins.setLayoutParams(paramButton);
                         TextView quantité = new TextView(getApplicationContext());
-                        Plus.setText("+");
-                        Moins.setText("-");
+                        quantité.setLayoutParams(param);
                         quantité.setText("1");
                         newRow.addView(text);
-                        newRow.addView(Plus);
-                        newRow.addView(quantité);
                         newRow.addView(Moins);
+                        newRow.addView(quantité);
+                        newRow.addView(Plus);
                         ImageButton Supprimer = new ImageButton(getApplicationContext());
                         Supprimer.setBackground(null);
                         Supprimer.setImageResource(R.mipmap.ic_clear);
+                        Supprimer.setLayoutParams(paramButton);
                         newRow.addView(Supprimer);
                         grille.addView(newRow);
                         Plus.setOnClickListener(new View.OnClickListener() {
@@ -136,21 +155,29 @@ public class AlterRecette extends AppCompatActivity
                     {
                         Recette_Contient contients=contient.get(x);
                         TableRow newRow = new TableRow(getApplicationContext());
+                        newRow.setGravity(Gravity.CENTER_VERTICAL);
                         EditText text = new EditText(getApplicationContext());
-                        Button Plus = new Button(getApplicationContext());
-                        Button Moins = new Button(getApplicationContext());
+                        ImageButton Plus = new ImageButton(getApplicationContext());
+                        Plus.setImageResource(R.drawable.ic_baseline_add_24);
+                        Plus.setBackground(null);
+                        Plus.setLayoutParams(paramButton);
+                        ImageButton Moins = new ImageButton(getApplicationContext());
+                        Moins.setImageResource(R.drawable.ic_baseline_remove_24);
+                        Moins.setBackground(null);
+                        Moins.setLayoutParams(paramButton);
                         TextView quantité = new TextView(getApplicationContext());
                         text.setText(contient.get(x).getProduit().getLibelleProduit());
-                        Plus.setText("+");
-                        Moins.setText("-");
+                        text.setLayoutParams(param);
                         quantité.setText(String.valueOf(contient.get(x).getQuantite()));
+                        quantité.setLayoutParams(param);
                         newRow.addView(text);
-                        newRow.addView(Plus);
-                        newRow.addView(quantité);
                         newRow.addView(Moins);
+                        newRow.addView(quantité);
+                        newRow.addView(Plus);
                         ImageButton Supprimer = new ImageButton(getApplicationContext());
                         Supprimer.setBackground(null);
                         Supprimer.setImageResource(R.mipmap.ic_clear);
+                        Supprimer.setLayoutParams(paramButton);
                         newRow.addView(Supprimer);
                         grille.addView(newRow);
                         Plus.setOnClickListener(new View.OnClickListener() {
@@ -252,17 +279,23 @@ public class AlterRecette extends AppCompatActivity
                     public void onClick(View v)
                     {
                         TableRow newRow = new TableRow(getApplicationContext());
+                        newRow.setGravity(Gravity.CENTER_VERTICAL);
                         EditText text = new EditText(getApplicationContext());
-                        Button Plus = new Button(getApplicationContext());
-                        Button Moins = new Button(getApplicationContext());
+                        ImageButton Plus = new ImageButton(getApplicationContext());
+                        Plus.setImageResource(R.drawable.ic_baseline_add_24);
+                        Plus.setBackground(null);
+                        Plus.setLayoutParams(paramButton);
+                        ImageButton Moins = new ImageButton(getApplicationContext());
+                        Moins.setImageResource(R.drawable.ic_baseline_remove_24);
+                        Moins.setBackground(null);
+                        Moins.setLayoutParams(paramButton);
                         TextView quantité = new TextView(getApplicationContext());
-                        Plus.setText("+");
-                        Moins.setText("-");
                         quantité.setText("1");
+                        quantité.setLayoutParams(param);
                         newRow.addView(text);
-                        newRow.addView(Plus);
-                        newRow.addView(quantité);
                         newRow.addView(Moins);
+                        newRow.addView(quantité);
+                        newRow.addView(Plus);
                         grille.addView(newRow);
                         Plus.setOnClickListener(new View.OnClickListener() {
                             @Override

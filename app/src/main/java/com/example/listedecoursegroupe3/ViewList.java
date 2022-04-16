@@ -97,13 +97,6 @@ public class ViewList extends AppCompatActivity
                         }
                     }
                 });
-                Retour.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent monIntent = new Intent(ViewList.this, MainActivity.class);
-                        startActivity(monIntent);
-                    }
-                });
                 deleteall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -123,6 +116,13 @@ public class ViewList extends AppCompatActivity
                 });
             }
             grille.addView(firstLinearLayout);
+            Retour.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent monIntent = new Intent(ViewList.this, MainActivity.class);
+                    startActivity(monIntent);
+                }
+            });
         }
         catch (SQLException throwables)
         {
