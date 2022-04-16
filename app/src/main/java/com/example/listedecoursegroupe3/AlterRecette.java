@@ -28,6 +28,7 @@ public class AlterRecette extends AppCompatActivity
     private Button Valider;
     private Button Supprimer;
     private ImageButton AddIngredient;
+    private ImageButton Retour;
     private EditText name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class AlterRecette extends AppCompatActivity
         Valider = findViewById(R.id.Valider);
         Supprimer = findViewById(R.id.Supprimer);
         AddIngredient = findViewById(R.id.imageButton2);
+        Retour = findViewById(R.id.imageView);
         name = findViewById(R.id.name);
         DataBaseLinker linker = new DataBaseLinker(this);
         Intent intent = this.getIntent();
@@ -242,6 +244,14 @@ public class AlterRecette extends AppCompatActivity
                     }
                 });
             }
+            Retour.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent monIntent = new Intent(AlterRecette.this, RecetteController.class);
+                    startActivity(monIntent);
+                }
+            });
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

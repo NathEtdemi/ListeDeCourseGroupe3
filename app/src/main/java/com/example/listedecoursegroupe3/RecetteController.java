@@ -24,7 +24,7 @@ public class RecetteController extends AppCompatActivity
 {
     private TableLayout grille;
     private Button AjoutRecette;
-    private Button Retour;
+    private ImageButton Retour;
     private EditText name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class RecetteController extends AppCompatActivity
         setContentView(R.layout.addproduit);
         grille = findViewById(R.id.layout);
         AjoutRecette = findViewById(R.id.Valider);
-        Retour = findViewById(R.id.Supprimer);
+        Retour = findViewById(R.id.imageView);
         name = findViewById(R.id.name);
         name.setVisibility(View.GONE);
         DataBaseLinker linker = new DataBaseLinker(this);
@@ -94,7 +94,6 @@ public class RecetteController extends AppCompatActivity
                     startActivity(monIntent);
                 }
             });
-            Retour.setText("Retour");
             Retour.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v)

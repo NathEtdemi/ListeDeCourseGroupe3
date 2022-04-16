@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
@@ -23,6 +24,7 @@ public class AlterProduit extends AppCompatActivity
     private Button Valider;
     private Button Supprimer;
     private EditText name;
+    private ImageButton Retour;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,7 @@ public class AlterProduit extends AppCompatActivity
         grille = findViewById(R.id.layout);
         Valider = findViewById(R.id.Valider);
         Supprimer = findViewById(R.id.Supprimer);
+        Retour = findViewById(R.id.imageView);
         name = findViewById(R.id.name);
         DataBaseLinker linker = new DataBaseLinker(this);
         Intent intent = this.getIntent();
@@ -89,6 +92,14 @@ public class AlterProduit extends AppCompatActivity
                     }
                 });
             }
+            Retour.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent monIntent = new Intent(AlterProduit.this, MainActivity.class);
+                    startActivity(monIntent);
+                }
+            });
         }
         catch (SQLException throwables)
         {

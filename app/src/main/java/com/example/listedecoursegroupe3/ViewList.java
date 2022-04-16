@@ -29,7 +29,7 @@ import java.util.List;
 public class ViewList extends AppCompatActivity
 {
     private TableLayout grille;
-    private Button Retour;
+    private ImageButton Retour;
     private Button deleteall;
 
     @Override
@@ -38,7 +38,7 @@ public class ViewList extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listeview);
         grille=findViewById(R.id.layout);
-        Retour = findViewById(R.id.retour);
+        Retour = findViewById(R.id.imageView);
         deleteall = findViewById(R.id.deleteall);
         DataBaseLinker linker = new DataBaseLinker(this);
         try {
