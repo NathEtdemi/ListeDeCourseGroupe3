@@ -61,22 +61,62 @@ public class ViewList extends AppCompatActivity
                 produitLinearLayout.addView(newText);
                 produitLinearLayout.addView(checkBox);
                 firstLinearLayout.addView(produitLinearLayout);
+                if (Produits.getIscheck()==1)
+                {
+                    checkBox.setChecked(true);
+                    newText.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                }
                 checkBox.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (newText.getPaintFlags()!=16)
                         {
                             newText.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                            Produits.setIscheck(1);
+                            try {
+
+                                daoProduit.update(Produits);
+                            }
+                            catch (SQLException throwables)
+                            {
+                                throwables.printStackTrace();
+                            }
                         }
                         else
                         {
                             newText.setPaintFlags(0);
+                            Produits.setIscheck(0);
+                            try
+                            {
+                                daoProduit.update(Produits);
+                            }
+                            catch (SQLException throwables)
+                            {
+                                throwables.printStackTrace();
+                            }
                         }
                     }
                 });
                 Retour.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent monIntent = new Intent(ViewList.this, MainActivity.class);
+                        startActivity(monIntent);
+                    }
+                });
+                deleteall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        for (Produit Produits : produit) {
+                            try
+                            {
+                                daoProduit.delete(Produits);
+                            }
+                            catch (SQLException throwables)
+                            {
+                                throwables.printStackTrace();
+                            }
+                        }
                         Intent monIntent = new Intent(ViewList.this, MainActivity.class);
                         startActivity(monIntent);
                     }

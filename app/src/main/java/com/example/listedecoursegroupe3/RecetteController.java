@@ -14,7 +14,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.listedecoursegroupe3.entites.Produit;
 import com.example.listedecoursegroupe3.entites.Recette;
+import com.example.listedecoursegroupe3.entites.Recette_Contient;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
@@ -80,9 +82,55 @@ public class RecetteController extends AppCompatActivity
                         ((ViewGroup) newRow.getParent()).removeView(newRow);
                     }
                 });
+                ImageButton AddCart = new ImageButton(this);
+                AddCart.setLayoutParams(paramButton);
+                AddCart.setImageResource(R.mipmap.ic_add);
+                AddCart.setBackground(null);
+                AddCart.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v) {
+                        try
+                        {
+                            Dao<Recette_Contient, Integer> daoRecette_Contient = linker.getDao(Recette_Contient.class);
+                            Dao<Produit, Integer> daoProduit = linker.getDao(Produit.class);
+                            List<Recette_Contient> contient = daoRecette_Contient.queryForAll();
+                            List<Produit> produits = daoProduit.queryForAll();
+                            for (Recette_Contient Rcontient:contient)
+                            {
+                                if (Rcontient.getRecette().getIdRecette()==recette.getIdRecette())
+                                {
+                                    Produit produit=new Produit(Rcontient.getProduit().getLibelleProduit(),Rcontient.getQuantite());
+                                    Boolean Tocreate=true;
+                                    for (Produit Produits: produits)
+                                    {
+                                        if(Produits.getLibelleProduit().equals(produit.getLibelleProduit()))
+                                        {
+                                            Log.e("bouton", "ici");
+                                            Produits.setQuantite(produit.getQuantite()+Produits.getQuantite());
+                                            daoProduit.update(Produits);
+                                            Tocreate=false;
+                                        }
+                                    }
+                                    if (Tocreate) {
+                                        daoProduit.create(produit);
+                                    }
+                                    Intent monIntent = new Intent(RecetteController.this, MainActivity.class);
+                                    startActivity(monIntent);
+                                }
+                            }
+                        }
+                        catch (SQLException throwables)
+                        {
+                            throwables.printStackTrace();
+                        }
+                        ((ViewGroup) newRow.getParent()).removeView(newRow);
+                    }
+                });
                 newRow.addView(newText);
                 newRow.addView(Modifier);
                 newRow.addView(Supprimer);
+                newRow.addView(AddCart);
                 grille.addView(newRow);
             }
             AjoutRecette.setText("Ajouter Recette");

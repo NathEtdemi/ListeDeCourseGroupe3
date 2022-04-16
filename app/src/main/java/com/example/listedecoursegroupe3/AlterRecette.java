@@ -94,6 +94,10 @@ public class AlterRecette extends AppCompatActivity
                         newRow.addView(Plus);
                         newRow.addView(quantité);
                         newRow.addView(Moins);
+                        ImageButton Supprimer = new ImageButton(getApplicationContext());
+                        Supprimer.setBackground(null);
+                        Supprimer.setImageResource(R.mipmap.ic_clear);
+                        newRow.addView(Supprimer);
                         grille.addView(newRow);
                         Plus.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -112,6 +116,13 @@ public class AlterRecette extends AppCompatActivity
                                 }
                             }
                         });
+                        Supprimer.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v)
+                            {
+                                grille.removeView(newRow);
+                            }
+                        });
                     }
                 });
             }
@@ -123,6 +134,7 @@ public class AlterRecette extends AppCompatActivity
                 {
                     if (contient.get(x).getRecette().getIdRecette()==recette.getIdRecette())
                     {
+                        Recette_Contient contients=contient.get(x);
                         TableRow newRow = new TableRow(getApplicationContext());
                         EditText text = new EditText(getApplicationContext());
                         Button Plus = new Button(getApplicationContext());
@@ -136,7 +148,62 @@ public class AlterRecette extends AppCompatActivity
                         newRow.addView(Plus);
                         newRow.addView(quantité);
                         newRow.addView(Moins);
+                        ImageButton Supprimer = new ImageButton(getApplicationContext());
+                        Supprimer.setBackground(null);
+                        Supprimer.setImageResource(R.mipmap.ic_clear);
+                        newRow.addView(Supprimer);
                         grille.addView(newRow);
+                        Plus.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v)
+                            {
+                                quantité.setText(Integer.toString(Integer.parseInt((String) quantité.getText())+1));
+                                contients.setQuantite(contients.getQuantite()+1);
+                                try
+                                {
+                                    daoRecette_Contient.update(contients);
+                                }
+                                catch (SQLException throwables)
+                                {
+                                    throwables.printStackTrace();
+                                }
+                            }
+                        });
+                        Moins.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v)
+                            {
+                                if (Integer.parseInt((String) quantité.getText())!=1)
+                                {
+                                    quantité.setText(Integer.toString(Integer.parseInt((String) quantité.getText()) - 1));
+                                    contients.setQuantite(contients.getQuantite()-1);
+                                    try
+                                    {
+                                        daoRecette_Contient.update(contients);
+                                    }
+                                    catch (SQLException throwables)
+                                    {
+                                        throwables.printStackTrace();
+                                    }
+                                }
+                            }
+                        });
+                        Supprimer.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v)
+                            {
+                                grille.removeView(newRow);
+                                contient.remove(contients);
+                                try
+                                {
+                                    daoRecette_Contient.delete(contients);
+                                }
+                                catch (SQLException throwables)
+                                {
+                                    throwables.printStackTrace();
+                                }
+                            }
+                        });
                     }
                     else{
                         contient.remove(x);
@@ -158,7 +225,7 @@ public class AlterRecette extends AppCompatActivity
                                 daoProduit_Recette.update(produit);
                                 daoRecette_Contient.update(contient.get(x-3));
                             }
-                            for (int x = contient.size()+2; x < grille.getChildCount(); x++)
+                            for (int x = contient.size()+3; x < grille.getChildCount(); x++)
                             {
                                 Log.i("bouton", String.valueOf(x));
                                 Log.i("bouton", String.valueOf(contient.size()));

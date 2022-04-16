@@ -14,9 +14,13 @@ public class Produit {
     @DatabaseField( columnName="quantite")
     private int quantite;
 
+    @DatabaseField( columnName="ischeck")
+    private int ischeck;
+
     public Produit(String libelleProduit, int quantite) {
         this.libelleProduit = libelleProduit;
         this.quantite = quantite;
+        this.ischeck = 0;
     }
 
     public int getQuantite() {
@@ -46,4 +50,11 @@ public class Produit {
         this.libelleProduit = libelleProduit;
     }
 
+    public int getIscheck() {
+        return ischeck;
+    }
+
+    public void setIscheck(int ischeck) {
+        this.ischeck = ischeck;
+    }
 }

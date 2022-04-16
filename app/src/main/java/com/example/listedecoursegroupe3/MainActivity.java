@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity
                 Plus.setImageResource(R.drawable.ic_baseline_add_24);
                 Plus.setBackground(null);
                 TextView quantité = new TextView(this);
-                quantité.setText("1");
+                quantité.setText(String.valueOf(Produits.getQuantite()));
                 ImageButton Moins = new ImageButton(this);
                 Moins.setImageResource(R.drawable.ic_baseline_remove_24);
                 Moins.setBackground(null);
@@ -116,6 +116,15 @@ public class MainActivity extends AppCompatActivity
                     public void onClick(View v)
                     {
                         quantité.setText(Integer.toString(Integer.parseInt((String) quantité.getText())+1));
+                        Produits.setQuantite(Produits.getQuantite()+1);
+                        try
+                        {
+                            daoProduit.update(Produits);
+                        }
+                        catch (SQLException throwables)
+                        {
+                            throwables.printStackTrace();
+                        }
                     }
                 });
                 Moins.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +134,15 @@ public class MainActivity extends AppCompatActivity
                         if (Integer.parseInt((String) quantité.getText())!=1)
                         {
                             quantité.setText(Integer.toString(Integer.parseInt((String) quantité.getText()) - 1));
+                            Produits.setQuantite(Produits.getQuantite()-1);
+                            try
+                            {
+                                daoProduit.update(Produits);
+                            }
+                            catch (SQLException throwables)
+                            {
+                                throwables.printStackTrace();
+                            }
                         }
                     }
                 });
