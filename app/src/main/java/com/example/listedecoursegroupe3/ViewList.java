@@ -5,14 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -28,7 +32,7 @@ import java.util.List;
 
 public class ViewList extends AppCompatActivity
 {
-    private TableLayout grille;
+    private ScrollView grille;
     private ImageButton Retour;
     private Button deleteall;
 
@@ -44,19 +48,19 @@ public class ViewList extends AppCompatActivity
         try {
             Dao<Produit, Integer> daoProduit = linker.getDao(Produit.class);
             List<Produit> produit = daoProduit.queryForAll();
+            LinearLayout firstLinearLayout = new LinearLayout(this);
+            firstLinearLayout.setOrientation(LinearLayout.VERTICAL);
             for (Produit Produits : produit) {
-                TableRow.LayoutParams paramButton = new TableRow.LayoutParams(
-                        TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT,
-                        1f
-                );
-                TableRow newRow = new TableRow(this);
+                LinearLayout produitLinearLayout =  new LinearLayout(this);
+                produitLinearLayout.setGravity(Gravity.CENTER_VERTICAL);
                 CheckBox checkBox=new CheckBox(this);
                 TextView newText = new TextView(this);
+                newText.setTextSize(25.0F);
+                newText.setTypeface(Typeface.DEFAULT_BOLD);
                 newText.setText(String.valueOf(Produits.getQuantite())+" x "+Produits.getLibelleProduit());
-                newRow.addView(newText);
-                newRow.addView(checkBox);
-                grille.addView(newRow);
+                produitLinearLayout.addView(newText);
+                produitLinearLayout.addView(checkBox);
+                firstLinearLayout.addView(produitLinearLayout);
                 checkBox.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -78,6 +82,7 @@ public class ViewList extends AppCompatActivity
                     }
                 });
             }
+            grille.addView(firstLinearLayout);
         }
         catch (SQLException throwables)
         {

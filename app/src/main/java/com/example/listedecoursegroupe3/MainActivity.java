@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -56,13 +57,15 @@ public class MainActivity extends AppCompatActivity
                 LinearLayout.LayoutParams paramButton = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT,
-                        1f
+                        0.3f
                 );
                 LinearLayout produitLinearLayout =  new LinearLayout(this);
                 produitLinearLayout.setGravity(Gravity.CENTER_VERTICAL);
                 TextView newText = new TextView(this);
                 newText.setText(Produits.getLibelleProduit());
                 newText.setLayoutParams(paramButton);
+                newText.setTextSize(15.0F);
+                newText.setTypeface(Typeface.DEFAULT_BOLD);
                 ImageButton Modifier = new ImageButton(this);
                 Modifier.setLayoutParams(paramButton);
                 Modifier.setBackground(null);
@@ -93,12 +96,14 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
 
-                Button Plus = new Button(this);
+                ImageButton Plus = new ImageButton(this);
+                Plus.setImageResource(R.drawable.ic_baseline_add_24);
+                Plus.setBackground(null);
                 TextView quantité = new TextView(this);
                 quantité.setText("1");
-                Button Moins = new Button(this);
-                Plus.setText("+");
-                Moins.setText("-");
+                ImageButton Moins = new ImageButton(this);
+                Moins.setImageResource(R.drawable.ic_baseline_remove_24);
+                Moins.setBackground(null);
                 produitLinearLayout.addView(newText);
                 produitLinearLayout.addView(Moins);
                 produitLinearLayout.addView(quantité);

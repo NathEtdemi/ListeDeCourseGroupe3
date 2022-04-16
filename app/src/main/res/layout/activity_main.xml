@@ -19,7 +19,8 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Préparation de votre\n liste de course"
+            android:fontFamily="@font/acme"
+            android:text="Préparation de votre\n liste de courses..."
             android:textAlignment="center"
             android:textColor="@color/text_color"
             android:textSize="24sp"
@@ -29,6 +30,9 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/acme"
             android:text="Vos produits"
             android:textColor="@color/text_color2"
             android:textSize="20sp" />
@@ -41,6 +45,8 @@
             android:layout_width="0dp"
             android:layout_height="400dp"
             app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             app:layout_constraintRight_toRightOf="parent">
         </ScrollView>
 
