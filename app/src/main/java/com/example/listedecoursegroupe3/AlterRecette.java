@@ -26,7 +26,6 @@ public class AlterRecette extends AppCompatActivity
 {
     private TableLayout grille;
     private Button Valider;
-    private Button Supprimer;
     private ImageButton AddIngredient;
     private ImageButton Retour;
     private EditText name;
@@ -36,7 +35,6 @@ public class AlterRecette extends AppCompatActivity
         setContentView(R.layout.alterrecette);
         grille = findViewById(R.id.layout);
         Valider = findViewById(R.id.Valider);
-        Supprimer = findViewById(R.id.Supprimer);
         AddIngredient = findViewById(R.id.imageButton2);
         Retour = findViewById(R.id.imageView);
         name = findViewById(R.id.name);
@@ -48,7 +46,6 @@ public class AlterRecette extends AppCompatActivity
             Dao<Recette_Contient, Integer> daoRecette_Contient = linker.getDao(Recette_Contient.class);
             Recette recette = dao.queryForId(intent.getIntExtra("id", 0));
             if (recette == null) {
-                Supprimer.setText("Retour");
                 Valider.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -77,18 +74,6 @@ public class AlterRecette extends AppCompatActivity
                             {
                                 throwables.printStackTrace();
                             }
-                        }
-                    }
-                });
-                Supprimer.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            dao.delete(recette);
-                            Intent monIntent = new Intent(AlterRecette.this, RecetteController.class);
-                            startActivity(monIntent);
-                        } catch (SQLException throwables) {
-                            throwables.printStackTrace();
                         }
                     }
                 });
@@ -187,18 +172,6 @@ public class AlterRecette extends AppCompatActivity
                             }
                             recette.setLibelle(String.valueOf(name.getText()));
                             dao.update(recette);
-                            Intent monIntent = new Intent(AlterRecette.this, RecetteController.class);
-                            startActivity(monIntent);
-                        } catch (SQLException throwables) {
-                            throwables.printStackTrace();
-                        }
-                    }
-                });
-                Supprimer.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            dao.delete(recette);
                             Intent monIntent = new Intent(AlterRecette.this, RecetteController.class);
                             startActivity(monIntent);
                         } catch (SQLException throwables) {

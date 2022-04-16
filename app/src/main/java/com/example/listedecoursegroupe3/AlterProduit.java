@@ -22,7 +22,6 @@ public class AlterProduit extends AppCompatActivity
 {
     private TableLayout grille;
     private Button Valider;
-    private Button Supprimer;
     private EditText name;
     private ImageButton Retour;
     @Override
@@ -31,7 +30,6 @@ public class AlterProduit extends AppCompatActivity
         setContentView(R.layout.addproduit);
         grille = findViewById(R.id.layout);
         Valider = findViewById(R.id.Valider);
-        Supprimer = findViewById(R.id.Supprimer);
         Retour = findViewById(R.id.imageView);
         name = findViewById(R.id.name);
         DataBaseLinker linker = new DataBaseLinker(this);
@@ -41,7 +39,6 @@ public class AlterProduit extends AppCompatActivity
             Produit produit = dao.queryForId(intent.getIntExtra("id", 0));
             if (produit == null)
             {
-                Supprimer.setText("Retour");
                 Valider.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
@@ -61,36 +58,10 @@ public class AlterProduit extends AppCompatActivity
                         }
                     }
                 });
-                Supprimer.setOnClickListener(new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        Intent monIntent = new Intent(AlterProduit.this, MainActivity.class);
-                        startActivity(monIntent);
-                    }
-                });
             }
             else
             {
                 name.setText(produit.getLibelleProduit());
-                Supprimer.setOnClickListener(new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        try
-                        {
-                            dao.delete(produit);
-                            Intent monIntent = new Intent(AlterProduit.this, MainActivity.class);
-                            startActivity(monIntent);
-                        }
-                        catch (SQLException throwables)
-                        {
-                            throwables.printStackTrace();
-                        }
-                    }
-                });
             }
             Retour.setOnClickListener(new View.OnClickListener() {
                 @Override

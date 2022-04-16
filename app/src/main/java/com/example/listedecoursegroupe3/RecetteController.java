@@ -54,7 +54,7 @@ public class RecetteController extends AppCompatActivity
                 ImageButton Modifier = new ImageButton(this);
                 Modifier.setLayoutParams(paramButton);
                 Modifier.setBackground(null);
-                Modifier.setImageResource(R.drawable.edit);
+                Modifier.setImageResource(R.mipmap.ic_edit);
                 Modifier.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v)
@@ -66,7 +66,7 @@ public class RecetteController extends AppCompatActivity
                 });
                 ImageButton Supprimer = new ImageButton(this);
                 Supprimer.setLayoutParams(paramButton);
-                Supprimer.setImageResource(R.drawable.delete);
+                Supprimer.setImageResource(R.mipmap.ic_clear);
                 Supprimer.setBackground(null);
                 Supprimer.setOnClickListener(new View.OnClickListener() {
                     @Override

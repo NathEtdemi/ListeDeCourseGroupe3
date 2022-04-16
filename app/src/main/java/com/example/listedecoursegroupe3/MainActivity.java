@@ -6,11 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -26,7 +29,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
 {
-    private TableLayout grille;
+    private ScrollView grille;
     private Button Liste;
     private Button AddProduit;
     private Button Recette;
@@ -45,20 +48,25 @@ public class MainActivity extends AppCompatActivity
         {
             Dao<Produit, Integer> daoProduit = linker.getDao( Produit.class );
             List<Produit> produit = daoProduit.queryForAll();
+            LinearLayout firstLinearLayout = new LinearLayout(this);
+            firstLinearLayout.setOrientation(LinearLayout.VERTICAL);
             for(Produit Produits: produit)
             {
-                TableRow.LayoutParams paramButton = new TableRow.LayoutParams(
-                        TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT,
+
+                LinearLayout.LayoutParams paramButton = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
                         1f
                 );
-                TableRow newRow = new TableRow(this);
+                LinearLayout produitLinearLayout =  new LinearLayout(this);
+                produitLinearLayout.setGravity(Gravity.CENTER_VERTICAL);
                 TextView newText = new TextView(this);
                 newText.setText(Produits.getLibelleProduit());
+                newText.setLayoutParams(paramButton);
                 ImageButton Modifier = new ImageButton(this);
                 Modifier.setLayoutParams(paramButton);
                 Modifier.setBackground(null);
-                Modifier.setImageResource(R.drawable.edit);
+                Modifier.setImageResource(R.mipmap.ic_edit);
                 Modifier.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v)
@@ -70,7 +78,7 @@ public class MainActivity extends AppCompatActivity
                 });
                 ImageButton SupprimerProduit = new ImageButton(this);
                 SupprimerProduit.setLayoutParams(paramButton);
-                SupprimerProduit.setImageResource(R.drawable.delete);
+                SupprimerProduit.setImageResource(R.mipmap.ic_clear);
                 SupprimerProduit.setBackground(null);
                 SupprimerProduit.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -81,23 +89,7 @@ public class MainActivity extends AppCompatActivity
                         catch (SQLException throwables) {
                             throwables.printStackTrace();
                         }
-                        ((ViewGroup) newRow.getParent()).removeView(newRow);
-                    }
-                });
-
-                RadioButton radioButton = new RadioButton(this);
-                radioButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Check which radiobutton was pressed
-                        if (!radioButton.isSelected()){
-                            radioButton.setChecked(true);
-                            radioButton.setSelected(true);
-                        }
-                        else{
-                            radioButton.setChecked(false);
-                            radioButton.setSelected(false);
-                        }
+                        ((ViewGroup) produitLinearLayout.getParent()).removeView(produitLinearLayout);
                     }
                 });
 
@@ -107,14 +99,13 @@ public class MainActivity extends AppCompatActivity
                 Button Moins = new Button(this);
                 Plus.setText("+");
                 Moins.setText("-");
-                newRow.addView(newText);
-                newRow.addView(Moins);
-                newRow.addView(quantité);
-                newRow.addView(Plus);
-                newRow.addView(Modifier);
-                newRow.addView(SupprimerProduit);
-                newRow.addView(radioButton);
-                grille.addView(newRow);
+                produitLinearLayout.addView(newText);
+                produitLinearLayout.addView(Moins);
+                produitLinearLayout.addView(quantité);
+                produitLinearLayout.addView(Plus);
+                produitLinearLayout.addView(Modifier);
+                produitLinearLayout.addView(SupprimerProduit);
+                firstLinearLayout.addView(produitLinearLayout);
                 Plus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v)
@@ -133,6 +124,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
             }
+            grille.addView(firstLinearLayout);
             AddProduit.setOnClickListener(new View.OnClickListener()
             {
                 @Override
