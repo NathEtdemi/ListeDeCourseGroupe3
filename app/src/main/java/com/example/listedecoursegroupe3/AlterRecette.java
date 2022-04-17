@@ -285,6 +285,11 @@ public class AlterRecette extends AppCompatActivity
                         newRow.addView(Moins);
                         newRow.addView(quantité);
                         newRow.addView(Plus);
+                        ImageButton Supprimer = new ImageButton(getApplicationContext());
+                        Supprimer.setBackground(null);
+                        Supprimer.setImageResource(R.mipmap.ic_clear);
+                        Supprimer.setLayoutParams(paramButton);
+                        newRow.addView(Supprimer);
                         grille.addView(newRow);
                         Plus.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -301,6 +306,13 @@ public class AlterRecette extends AppCompatActivity
                                 {
                                     quantité.setText(Integer.toString(Integer.parseInt((String) quantité.getText()) - 1));
                                 }
+                            }
+                        });
+                        Supprimer.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v)
+                            {
+                                grille.removeView(newRow);
                             }
                         });
                     }

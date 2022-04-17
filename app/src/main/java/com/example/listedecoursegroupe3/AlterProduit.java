@@ -16,6 +16,7 @@ import com.example.listedecoursegroupe3.entites.Produit;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 
 public class AlterProduit extends AppCompatActivity
@@ -46,8 +47,22 @@ public class AlterProduit extends AppCompatActivity
                         if (String.valueOf(name.getText()) != "")
                         {
                             try {
+                                List<Produit> produits = dao.queryForAll();
                                 Produit produit = new Produit(String.valueOf(name.getText()),1);
-                                dao.create(produit);
+                                boolean ToCreate=true;
+                                for (Produit Produits:produits)
+                                {
+                                    if (Produits.getLibelleProduit().equals(produit.getLibelleProduit()))
+                                    {
+                                        ToCreate=false;
+                                        Produits.setQuantite(Produits.getQuantite()+1);
+                                        dao.update(Produits);
+                                    }
+                                }
+                                if (ToCreate)
+                                {
+                                    dao.create(produit);
+                                }
                                 Intent monIntent = new Intent(AlterProduit.this, MainActivity.class);
                                 startActivity(monIntent);
                             }
