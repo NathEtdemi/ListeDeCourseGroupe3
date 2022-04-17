@@ -3,11 +3,13 @@ package com.example.listedecoursegroupe3;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -28,6 +30,7 @@ public class RecetteController extends AppCompatActivity
     private Button AjoutRecette;
     private ImageButton Retour;
     private EditText name;
+    private LinearLayout texte;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +38,8 @@ public class RecetteController extends AppCompatActivity
         grille = findViewById(R.id.layout);
         AjoutRecette = findViewById(R.id.Valider);
         Retour = findViewById(R.id.imageView);
+        texte = findViewById(R.id.first_layout);
+        texte.setVisibility(View.GONE);
         name = findViewById(R.id.name);
         name.setVisibility(View.GONE);
         DataBaseLinker linker = new DataBaseLinker(this);
@@ -51,6 +56,7 @@ public class RecetteController extends AppCompatActivity
                         1f
                 );
                 TableRow newRow = new TableRow(this);
+                newRow.setGravity(Gravity.CENTER_VERTICAL);
                 TextView newText = new TextView(this);
                 newText.setText(recette.getLibelle());
                 ImageButton Modifier = new ImageButton(this);
@@ -133,7 +139,7 @@ public class RecetteController extends AppCompatActivity
                 newRow.addView(AddCart);
                 grille.addView(newRow);
             }
-            AjoutRecette.setText("Ajouter Recette");
+            AjoutRecette.setText("Creer une recette");
             AjoutRecette.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v)

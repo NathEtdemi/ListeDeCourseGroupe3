@@ -47,7 +47,6 @@ public class AlterRecette extends AppCompatActivity
                 TableRow.LayoutParams.WRAP_CONTENT,
                 1f
         );
-
         try {
             Dao<Recette, Integer> dao = linker.getDao(Recette.class);
             Dao<Produit_Recette, Integer> daoProduit_Recette = linker.getDao(Produit_Recette.class);
@@ -154,9 +153,11 @@ public class AlterRecette extends AppCompatActivity
                         EditText text = new EditText(getApplicationContext());
                         ImageButton Plus = new ImageButton(getApplicationContext());
                         Plus.setImageResource(R.drawable.ic_baseline_add_24);
+                        Plus.setLayoutParams(paramButton);
                         Plus.setBackground(null);
                         ImageButton Moins = new ImageButton(getApplicationContext());
                         Moins.setImageResource(R.drawable.ic_baseline_remove_24);
+                        Moins.setLayoutParams(paramButton);
                         Moins.setBackground(null);
                         TextView quantité = new TextView(getApplicationContext());
                         text.setText(contient.get(x).getProduit().getLibelleProduit());
