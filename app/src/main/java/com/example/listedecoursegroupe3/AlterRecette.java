@@ -1,6 +1,7 @@
 package com.example.listedecoursegroupe3;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -42,11 +43,6 @@ public class AlterRecette extends AppCompatActivity
         DataBaseLinker linker = new DataBaseLinker(this);
         Intent intent = this.getIntent();
         TableRow.LayoutParams paramButton = new TableRow.LayoutParams(
-                TableRow.LayoutParams.MATCH_PARENT,
-                TableRow.LayoutParams.WRAP_CONTENT,
-                1f
-        );
-        TableRow.LayoutParams param = new TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.WRAP_CONTENT,
                 1f
@@ -106,7 +102,6 @@ public class AlterRecette extends AppCompatActivity
                         Moins.setBackground(null);
                         Moins.setLayoutParams(paramButton);
                         TextView quantité = new TextView(getApplicationContext());
-                        quantité.setLayoutParams(param);
                         quantité.setText("1");
                         newRow.addView(text);
                         newRow.addView(Moins);
@@ -160,16 +155,12 @@ public class AlterRecette extends AppCompatActivity
                         ImageButton Plus = new ImageButton(getApplicationContext());
                         Plus.setImageResource(R.drawable.ic_baseline_add_24);
                         Plus.setBackground(null);
-                        Plus.setLayoutParams(paramButton);
                         ImageButton Moins = new ImageButton(getApplicationContext());
                         Moins.setImageResource(R.drawable.ic_baseline_remove_24);
                         Moins.setBackground(null);
-                        Moins.setLayoutParams(paramButton);
                         TextView quantité = new TextView(getApplicationContext());
                         text.setText(contient.get(x).getProduit().getLibelleProduit());
-                        text.setLayoutParams(param);
                         quantité.setText(String.valueOf(contient.get(x).getQuantite()));
-                        quantité.setLayoutParams(param);
                         newRow.addView(text);
                         newRow.addView(Moins);
                         newRow.addView(quantité);
@@ -284,14 +275,11 @@ public class AlterRecette extends AppCompatActivity
                         ImageButton Plus = new ImageButton(getApplicationContext());
                         Plus.setImageResource(R.drawable.ic_baseline_add_24);
                         Plus.setBackground(null);
-                        Plus.setLayoutParams(paramButton);
                         ImageButton Moins = new ImageButton(getApplicationContext());
                         Moins.setImageResource(R.drawable.ic_baseline_remove_24);
                         Moins.setBackground(null);
-                        Moins.setLayoutParams(paramButton);
                         TextView quantité = new TextView(getApplicationContext());
                         quantité.setText("1");
-                        quantité.setLayoutParams(param);
                         newRow.addView(text);
                         newRow.addView(Moins);
                         newRow.addView(quantité);

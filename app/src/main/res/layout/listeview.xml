@@ -72,16 +72,18 @@
 
         <Button
             android:id="@+id/deleteall"
-            android:layout_width="wrap_content"
+            android:layout_width="384dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_weight="1"
+            android:drawableTop="@drawable/ic_baseline_delete_sweep_24"
             android:text="Tout supprimer"
-            android:drawableTop="@drawable/ic_baseline_add_shopping_cart_24"
-            tools:layout_editor_absoluteX="94dp"
-            tools:layout_editor_absoluteY="1dp"
-            android:textSize="15sp"
             android:textAllCaps="false"
-            android:background="@drawable/background_button"/>
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            tools:layout_editor_absoluteX="94dp"
+            tools:layout_editor_absoluteY="1dp" />
 
     </LinearLayout>
 
